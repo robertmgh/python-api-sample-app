@@ -1,9 +1,17 @@
-from django.shortcuts import render
+from django.http import Http404
+from rest_framework import viewsets
 
-# Create your views here.
+from .serializers import UserSerializer
+from .models import User
 
-from django.http import HttpResponse
 
-
-def index(request):
-    return HttpResponse("Hello, world.")
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    
+#def detail(request, user_id):
+#    try:
+#        user = User.objects.get(pk=user_id)
+#    except User.DoesNotExist:
+#        raise Http404("User does not exist")
+#    return HttpResponse(user)
