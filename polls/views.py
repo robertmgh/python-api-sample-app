@@ -17,14 +17,19 @@ class UserList(APIView):
     	users = User.objects.all()
     	serializer = UserSerializer(users, many=True)
     	return Response(serializer.data)
-
-#class UserViewSet(APIView):
-#    queryset = User.objects.all()
-#    serializer_class = UserSerializer
-    
-#def detail(request, user_id):
-#    try:
-#        user = User.objects.get(pk=user_id)
-#    except User.DoesNotExist:
-#        raise Http404("User does not exist")
-#    return HttpResponse(user)
+    	
+class UserDetails(APIView):
+    def get_object(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+             
+    def put(self, request, pk, format=None):
+        user = self.get_object(pk=pk)
+        serializer = UserSerializer(user, data=request.data)
+        if serializer.is_valid(): 
+           serializer.save()
+           return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
