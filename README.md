@@ -22,3 +22,5 @@ Sample user:
         "admin": true,
         "active_from": "2023-11-14T19:33:26.768000Z"
     }
+
+run tests: ./manage.py test
