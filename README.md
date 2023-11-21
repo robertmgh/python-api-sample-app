@@ -3,6 +3,7 @@
 Fill data with
 
 migrate db:
+python3 manage.py makemigrations
 python3 manage.py migrate
 
 user = User(id=1,name='Robert',active_from=timezone.now())
