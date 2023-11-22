@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import User
+from .models import User, AccessGroup, AccessMembership
 
 class UserSerializer(serializers.ModelSerializer):
     
@@ -17,3 +17,15 @@ class UserSerializer(serializers.ModelSerializer):
    class Meta:
        model = User
        fields = ('id', 'name', 'surname', 'email', 'age', 'admin', 'active_from')
+       
+class AccessGroupSerializer(serializers.ModelSerializer):
+    
+   class Meta:
+       model = AccessGroup
+       fields = ('id', 'name', 'description')
+       
+class AccessMembershipSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = AccessMembership
+        fields = ('id', 'access_group', 'user', 'inviter', 'invite_data')
