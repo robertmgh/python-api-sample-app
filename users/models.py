@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class User(models.Model):
     id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=200)
@@ -13,12 +12,7 @@ class User(models.Model):
 class AccessGroup(models.Model):
     id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=128)
-    members = models.ManyToManyField(
-        User,
-        through="AccessMembership",
-        through_fields=("access_group", "user"),
-    )
-
+    description = models.CharField(max_length=500)
 
 class AccessMembership(models.Model):
     id = models.BigIntegerField(primary_key=True)
