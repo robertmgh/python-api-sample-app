@@ -4,6 +4,9 @@ from rest_framework.views import APIView
 from .serializers import UserSerializer, AccessGroupSerializer, AccessMembershipSerializer
 from .models import User, AccessGroup, AccessMembership
 from rest_framework.response import Response
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 class UserList(APIView):
     def post(self, request, format=None):
@@ -53,6 +56,8 @@ class AccessGroupList(APIView):
     
 class AccessMembershipList(APIView):
     
+    @method_decorator(cache_page(60)) #cache for each user for 1 min
+    @method_decorator(vary_on_cookie)
     def get_list(self, pk):
         try:
             return AccessMembership.objects.filter(user=pk)
